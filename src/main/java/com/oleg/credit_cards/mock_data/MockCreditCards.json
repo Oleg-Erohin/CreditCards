@@ -1,0 +1,27 @@
+[
+  {
+    "code": 10,
+    "name": "Bank Leumi LeIsrael",
+    "description": "Bank Leumi is an Israeli bank. It was founded on February 27, 1902, in Jaffa as the Anglo Palestine Company as subsidiary of the Jewish Colonial Trust (Jüdische Kolonialbank) Limited formed before in London by members of the Zionist movement to promote the industry, construction, agriculture, and infrastructure of the land hoped to ultimately become Israel."
+  },
+  {
+    "code": 11,
+    "name": "Israel Discount Bank",
+    "description": "Israel Discount Bank, Ltd. is a retail bank, commercial bank, private bank and financial services company headquartered in Tel Aviv with 112 branches throughout Israel."
+  },
+  {
+    "code": 12,
+    "name": "Bank Hapoalim",
+    "description": "Bank Hapoalim is one of the largest banks in Israel, established in 1921. The bank offers a broad range of financial services to retail, corporate, and institutional customers, with a focus on retail banking services."
+  },
+  {
+    "code": 20,
+    "name": "Mizrahi Tefahot Bank",
+    "description": "Bank Mizrahi-Tefahot is the third-largest bank in Israel. It has around 140 branches. The bank is the largest among Israel's mortgage lenders."
+  },
+  {
+    "code": 31,
+    "name": "First International Bank of Israel",
+    "description": "The First International Bank of Israel is an Israel-based bank. Its commercial base consists primarily of large corporate clients as well as end-market consumers.[2]"
+  }
+]
