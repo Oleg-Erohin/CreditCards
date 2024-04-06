@@ -1,0 +1,82 @@
+[
+  {
+    "cardNumber": 5189551295067492,
+    "dateOfIssue": "2022-12-26",
+    "imagePath": "",
+    "isBlocked": false,
+    "isDigital": true,
+    "creditLimit": 5000
+  },
+  {
+    "cardNumber": 5326103698701236,
+    "dateOfIssue": "2020-03-31",
+    "imagePath": "",
+    "isBlocked": false,
+    "isDigital": false,
+    "creditLimit": 15000
+  },
+  {
+    "cardNumber": 5521761234567890,
+    "dateOfIssue": "2022-05-15",
+    "imagePath": "",
+    "isBlocked": false,
+    "isDigital": true,
+    "creditLimit": 25000
+  },
+  {
+    "cardNumber": 4580037532159805,
+    "dateOfIssue": "2019-06-02",
+    "imagePath": "",
+    "isBlocked": true,
+    "isDigital": true,
+    "creditLimit": 9000
+  },
+  {
+    "cardNumber": 4580088529637415,
+    "dateOfIssue": "2024-09-19",
+    "imagePath": "",
+    "isBlocked": false,
+    "isDigital": true,
+    "creditLimit": 10000
+  },
+  {
+    "cardNumber": 4580121213141510,
+    "dateOfIssue": "2020-11-08",
+    "imagePath": "",
+    "isBlocked": false,
+    "isDigital": true,
+    "creditLimit": 16000
+  },
+  {
+    "cardNumber": 4580165123850906,
+    "dateOfIssue": "2023-12-21",
+    "imagePath": "",
+    "isBlocked": false,
+    "isDigital": true,
+    "creditLimit": 5000
+  },
+  {
+    "cardNumber": 4580210603598306,
+    "dateOfIssue": "2018-07-13",
+    "imagePath": "",
+    "isBlocked": true,
+    "isDigital": false,
+    "creditLimit": 12000
+  },
+  {
+    "cardNumber": 4580247894561230,
+    "dateOfIssue": "2023-05-11",
+    "imagePath": "",
+    "isBlocked": false,
+    "isDigital": true,
+    "creditLimit": 50000
+  },
+  {
+    "cardNumber": 4580276352419685,
+    "dateOfIssue": "2021-01-21",
+    "imagePath": "",
+    "isBlocked": false,
+    "isDigital": false,
+    "creditLimit": 12000
+  }
+]
