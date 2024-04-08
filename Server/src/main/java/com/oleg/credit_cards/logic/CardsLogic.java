@@ -22,33 +22,41 @@ public class CardsLogic {
         this.cardsDal = cardsDal;
     }
 
-    public List<Card> getCards() throws ApplicationException {
-        return this.cardsDal.getCards();
+    public List<Card> getCardsByFilters(boolean showIsBlocked, boolean showIsUnblocked, String cardsNumbersToShow, int[] banksCodesToShow) throws ApplicationException {
+        return this.cardsDal.getCardsByFilters(showIsBlocked, showIsUnblocked, cardsNumbersToShow, banksCodesToShow);
     }
 
-    public void increaseCreditLimit(long cardNumber, Date dateOfIssue, int requestedCreditLimit, String occupation, int averageMonthlyIncome) throws ApplicationException {
-        validateRequestedCreditLimit(requestedCreditLimit);
+    public List<Card> getAllCards() throws ApplicationException {
+        return this.cardsDal.getAllCards();
+    }
+
+    public void increaseCreditLimit(long cardNumber, int requestedCreditLimit, String occupation, int averageMonthlyIncome) throws ApplicationException {
+        validateRequestedCreditLimit(requestedCreditLimit, cardNumber);
         validateLimitPerOccupation(requestedCreditLimit, occupation, averageMonthlyIncome);
         validateIsCardBlocked(cardNumber);
         ValidateIncome(averageMonthlyIncome);
-        ValidateDateOfIssue(dateOfIssue);
+        ValidateDateOfIssue(cardNumber);
 
         this.cardsDal.increaseCreditLimit(cardNumber, requestedCreditLimit);
     }
 
-    private void validateRequestedCreditLimit(int requestedCreditLimit) throws ApplicationException {
-        if(requestedCreditLimit>100000){
+    private void validateRequestedCreditLimit(int requestedCreditLimit, long cardNumber) throws ApplicationException {
+        if (requestedCreditLimit > 100000) {
             throw new ApplicationException(ErrorType.REQUEST_DECLINED);
+        }
+        Card card = cardsDal.getCardById(cardNumber);
+        if (card.getCreditLimit() > requestedCreditLimit) {
+            throw new ApplicationException(ErrorType.CURRENT_CREDIT_LIMIT_HIGHER);
         }
     }
 
     private void validateLimitPerOccupation(int requestedCreditLimit, String occupation, int averageMonthlyIncome) throws ApplicationException {
-        if (occupation == Occupation.EMPLOYEE.toString()){
-            if(requestedCreditLimit > (averageMonthlyIncome/2)) {
+        if (occupation.equals(Occupation.EMPLOYEE.toString())) {
+            if (requestedCreditLimit > (averageMonthlyIncome / 2)) {
                 throw new ApplicationException(ErrorType.REQUESTED_LIMIT_TOO_HIGH);
             }
-        } else if (occupation == Occupation.SELFEMPLOYED.toString()){
-            if(requestedCreditLimit > (averageMonthlyIncome/3)) {
+        } else if (occupation.equals(Occupation.SELFEMPLOYED.toString())) {
+            if (requestedCreditLimit > (averageMonthlyIncome / 3)) {
                 throw new ApplicationException(ErrorType.REQUESTED_LIMIT_TOO_HIGH);
             }
         } else {
@@ -59,18 +67,20 @@ public class CardsLogic {
     private void validateIsCardBlocked(long cardNumber) throws ApplicationException {
         Card card = cardsDal.getCardById(cardNumber);
         boolean isCardBlocked = card.isBlocked();
-        if(isCardBlocked){
+        if (isCardBlocked) {
             throw new ApplicationException(ErrorType.CARD_BLOCKED);
         }
     }
 
     private void ValidateIncome(int averageMonthlyIncome) throws ApplicationException {
-        if(averageMonthlyIncome<12000){
+        if (averageMonthlyIncome < 12000) {
             throw new ApplicationException(ErrorType.INCOME_TOO_LOW);
         }
     }
 
-    private void ValidateDateOfIssue(Date dateOfIssue) throws ApplicationException {
+    private void ValidateDateOfIssue(long cardNumber) throws ApplicationException {
+        Card card = cardsDal.getCardById(cardNumber);
+        Date dateOfIssue = card.getDateOfIssue();
         LocalDate currentDate = LocalDate.now();
         LocalDate threeMonthsAgo = currentDate.minusMonths(3);
         Date threeMonthsAgoAsDate = Date.from(threeMonthsAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());

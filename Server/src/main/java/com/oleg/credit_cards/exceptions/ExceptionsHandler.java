@@ -3,7 +3,6 @@ package com.oleg.credit_cards.exceptions;
 import com.oleg.credit_cards.dto.ErrorBean;
 import com.oleg.credit_cards.enums.ErrorType;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ExceptionsHandler {
 
     @ExceptionHandler
-    @ResponseBody
     public ErrorBean toResponse(Throwable throwable, HttpServletResponse httpServletResponse) {
         if (throwable instanceof ApplicationException) {
             ApplicationException appException = (ApplicationException) throwable;
@@ -25,7 +23,7 @@ public class ExceptionsHandler {
             int errorNumber = errorType.getErrorNum();
             String errorMessage = errorType.getErrorMessage();
             ErrorBean errorBean = new ErrorBean(errorNumber, errorMessage);
-            httpServletResponse.setStatus(errorNumber);
+            httpServletResponse.setStatus(500);
             return errorBean;
         }
 

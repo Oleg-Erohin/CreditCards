@@ -14,13 +14,14 @@ import java.util.List;
 @Repository
 public class BanksDal {
     public List<Bank> getBanks() throws ApplicationException {
-        try{
+        try {
             String filePath = Consts.banksJsonFilePath;
             String jsonString = CommonFunctions.getJsonStringByFilePath(filePath);
             ObjectMapper objectMapper = new ObjectMapper();
-            List<Bank> banks = objectMapper.readValue(jsonString, new TypeReference<List<Bank>>() {});
+            List<Bank> banks = objectMapper.readValue(jsonString, new TypeReference<List<Bank>>() {
+            });
             return banks;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ApplicationException(ErrorType.GENERAL_ERROR, "Could not get banks", e);
         }
     }

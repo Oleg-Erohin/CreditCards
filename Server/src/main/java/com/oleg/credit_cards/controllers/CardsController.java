@@ -1,13 +1,12 @@
 package com.oleg.credit_cards.controllers;
 
 import com.oleg.credit_cards.dto.Card;
-import com.oleg.credit_cards.dto.SuccessfulLoginDetails;
+import com.oleg.credit_cards.dto.IncreaseRequestParams;
+import com.oleg.credit_cards.exceptions.ApplicationException;
 import com.oleg.credit_cards.logic.CardsLogic;
-import com.oleg.credit_cards.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,19 +19,28 @@ public class CardsController {
         this.cardsLogic = cardsLogic;
     }
 
-    @GetMapping
-    public List<Card> getCards(@RequestHeader("Authorization") String token) throws Exception {
-        SuccessfulLoginDetails successfulLoginDetails = JWTUtils.decodeJWT(token);
-        return this.cardsLogic.getCards();
+    @GetMapping("/byFilters")
+    public List<Card> getCardsByFilters(@RequestParam("showIsBlocked") boolean showIsBlocked,
+                                        @RequestParam("showIsUnblocked") boolean showIsUnblocked,
+                                        @RequestParam("cardsNumbersToShow") String cardsNumbersToShow,
+                                        @RequestParam("banksCodesToShow") int[] banksCodesToShow) throws Exception {
+        return this.cardsLogic.getCardsByFilters(showIsBlocked, showIsUnblocked, cardsNumbersToShow, banksCodesToShow);
     }
 
-    public void increaseCreditLimit(@RequestHeader("Authorization") String token,
-                                    @RequestParam("cardNumber") long cardNumber,
-                                    @RequestParam("DateOfIssue") Date dateOfIssue,
-                                    @RequestParam("requestedCreditLimit") int requestedCreditLimit,
-                                    @RequestParam("occupation") String occupation,
-                                    @RequestParam("averageMonthlyIncome") int averageMonthlyIncome) throws Exception {
-        SuccessfulLoginDetails successfulLoginDetails = JWTUtils.decodeJWT(token);
-        this.cardsLogic.increaseCreditLimit(cardNumber, dateOfIssue, requestedCreditLimit, occupation, averageMonthlyIncome);
+    @GetMapping("/")
+    public List<Card> getAllCards() throws Exception {
+        return this.cardsLogic.getAllCards();
     }
+
+    @PostMapping("/increaseCreditLimit")
+    public void increaseCreditLimit(@RequestBody IncreaseRequestParams increaseRequestParams) throws ApplicationException {
+
+        long cardNumber = increaseRequestParams.getCardNumber();
+        int requestedCreditLimit = increaseRequestParams.getRequestedCreditLimit();
+        String occupation = increaseRequestParams.getOccupation();
+        int averageMonthlyIncome = increaseRequestParams.getAverageMonthlyIncome();
+
+        this.cardsLogic.increaseCreditLimit(cardNumber, requestedCreditLimit, occupation, averageMonthlyIncome);
+    }
+
 }

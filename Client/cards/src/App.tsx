@@ -1,11 +1,21 @@
 import './App.css';
-import Login from './components/Login/Login';
+import CardsContainer from './components/CardsContainer/CardsContainer';
+import Header from './components/Header/Header';
 
 function App() {
+
   return (
-    <div className="App">
-      <Login/>
-    </div>
+    <section>
+      <header>
+        <Header />
+      </header>
+
+      <main>
+        <div className="App">
+          <CardsContainer />
+        </div>
+      </main>
+    </section>
   );
 }
 
